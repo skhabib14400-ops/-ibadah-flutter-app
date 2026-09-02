@@ -23,18 +23,23 @@ jobs:
       with:
         flutter-version: '3.19.6'
 
-    - name: Build APK Automatically
+    - name: Debug and Build APK
       run: |
-        PUBSPEC_PATH=$(find . -name "pubspec.yaml" -not -path "*/.*" | head -n 1)
-        if [ -n "$PUBSPEC_PATH" ]; then
-          DIR=$(dirname "$PUBSPEC_PATH")
-          echo "Found pubspec.yaml in: $DIR"
-          cd "$DIR"
+        echo "=== Listing Repository Structure ==="
+        find . -maxdepth 3 -not -path '*/.*'
+        
+        TARGET_DIR=$(find . -name "pubspec.yaml" -not -path "*/.*" -exec dirname {} \; | head -n 1)
+        
+        if [ -n "$TARGET_DIR" ]; then
+          echo "Found pubspec.yaml in: $TARGET_DIR"
+          cd "$TARGET_DIR"
           flutter pub get
           flutter build apk --release
         else
-          echo "Error: pubspec.yaml not found in repository!"
-          exit 1
+          echo "Fallback: Checking app directory"
+          if [ -d "app" ]; then cd app; fi
+          flutter pub get || true
+          flutter build apk --release
         fi
 
     - name: Upload APK
