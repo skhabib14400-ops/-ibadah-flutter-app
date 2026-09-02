@@ -1,0 +1,7 @@
+{
+  "name": "Ibadah",
+  "description": "Comprehensive Islamic Lifestyle and Prayer Times mobile application featuring accurate prayer schedules, Sahri & Iftar timetable, Al-Quran, Tasbih counter, Qibla compass, Asma-ul-Husna, and Duas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
